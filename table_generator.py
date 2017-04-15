@@ -61,7 +61,23 @@ d_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + born + '\',\'
 passed + '\',\'' + passed_lst + '\');\n'
     zaproses.write(string)
 
-for i in range(20):
+def addill():
+    global no_ill
+    no_ill = no_ill + 1
+    ill_id = str(no_ill)
+    p_id = str(no_persons + 1)
+    blgr = str(random.choice(bldgrps))
+    rf = str(random.choice(resfacts))
+    dis = random.choice(desiases)
+    vol = str(random.randint(1,4))
+    addpersons(random.randint(0,1))
+    string = 'INSERT INTO ill (ill_id, person_id, bllood_gr ,rf, disease,volume) VALUES (\'' + \
+ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\'' + vol + '\');\n'
+    zaproses.write(string)
+
+for i in range(30):
     adddonor()
+for i in range(10):
+    addill()
 
 zaproses.close()
