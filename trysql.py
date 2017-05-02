@@ -37,12 +37,14 @@ def show_ills():
     for i in results:
         print(i)
 
-def statistics():
+def statistics(col):
     cursor.execute("SELECT sum(passed) AS itogo, count(person_id) AS ludey, work FROM donors GROUP BY work ORDER BY ito"
 "go DESC")
     results = cursor.fetchall()
+    a = []
     for i in results:
-        print(i)
+        a.append(str(i[col]))
+    return '\n'.join(a)
 
 def info():
     a = ["На настоящий момент в базе", str(numpers), "человек:", str(numdon), "донор(ов) и", str(numill), "больных(ой)"]
