@@ -13,13 +13,23 @@ def rand_gen():
         cursor.execute(line)
     zaproses.close()
 
-rand_gen()
-
-def show_donors():
+def show_donors(col):
     cursor.execute("SELECT * FROM persons, donors WHERE persons.person_id = donors.person_id")
     results = cursor.fetchall()
+    a = []
     for i in results:
-        print(i)
+        a.append(str(i)[col])
+    return '\n'.join(a)
+
+def find_donors(blgr,rf,col):
+    string = "SELECT * FROM persons, donors WHERE persons.person_id = donors.person_id AND donors.rf = " + \
+str(rf) + " AND donors.bllood_gr = " + str(blgr)
+    cursor.execute(string)
+    results = cursor.fetchall()
+    a = []
+    for i in results:
+        a.append(str(i[col]))
+    return '\n'.join(a)
 
 def show_ills():
     cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id")
@@ -34,21 +44,9 @@ def statistics():
     for i in results:
         print(i)
 
-cursor.execute("SELECT count(person_id) FROM persons")
-results = cursor.fetchall()
-numpers = int(results[0][0])
-cursor.execute("SELECT count(donor_id) FROM donors")
-results = cursor.fetchall()
-numdon = int(results[0][0])
-cursor.execute("SELECT count(ill_id) FROM ill")
-results = cursor.fetchall()
-numill = int(results[0][0])
-
 def info():
-    print("На настоящий момент в базе", numpers, "человек:", numdon, "донор(ов) и", numill, "больных(ой)")
-
-info()
-statistics()
+    a = ["На настоящий момент в базе", str(numpers), "человек:", str(numdon), "донор(ов) и", str(numill), "больных(ой)"]
+    return ' '.join(a)
 
 def addpers():
     print("Введите фамилию, имя, отчество, контактные данные")
@@ -97,9 +95,13 @@ def ADDILL():
 ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\'' + vol + '\');\n'
     cursor.execute(string)
 
-
-show_ills()
-#ADDDONOR()
-ADDILL()
-show_ills()
-info()
+rand_gen()
+cursor.execute("SELECT count(person_id) FROM persons")
+results = cursor.fetchall()
+numpers = int(results[0][0])
+cursor.execute("SELECT count(donor_id) FROM donors")
+results = cursor.fetchall()
+numdon = int(results[0][0])
+cursor.execute("SELECT count(ill_id) FROM ill")
+results = cursor.fetchall()
+numill = int(results[0][0])
