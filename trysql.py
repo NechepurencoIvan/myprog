@@ -76,7 +76,7 @@ def addpers(string):
 
 def ADDDONOR(string):
     #addpers()
-    print('Пример: 1, 1, 1998-01-20, woman, RNPC, 32,2012-01-05')
+    #print('Пример: 1, 1, 1998-01-20, woman, RNPC, 32,2012-01-05')
     global numdon
     mylist = string.split()
     numdon = numdon + 1
@@ -94,17 +94,18 @@ d_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + born + '\',\'
 passed + '\',\'' + passed_lst + '\');\n'
     cursor.execute(string)
 
-def ADDILL():
-    addpers()
+def ADDILL(string):
+    #addpers()
     print('Пример: 1, 1, injuries, 4')
     global numill
     numill = numill + 1
+    mylist = string.split()
     ill_id = str(numill)
     p_id = str(numpers)
-    blgr = str(input())
-    rf = str(input())
-    dis = str(input())
-    vol = str(input())
+    blgr = mylist[0]#str(input())
+    rf = mylist[1]#str(input())
+    dis = mylist[2]#str(input())
+    vol = mylist[3]#str(input())
     string = 'INSERT INTO ill (ill_id, person_id, bllood_gr ,rf, disease,volume) VALUES (\'' + \
 ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\'' + vol + '\');\n'
     cursor.execute(string)

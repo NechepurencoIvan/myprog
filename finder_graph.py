@@ -29,7 +29,7 @@ def finder_donors():
     root = Tk()
     root["bg"] = "green"
     root.state("zoomed")
-    root.title("Река жизни")
+    root.title("Река жизни - поиск доноров")
 
 
     button = Button(root)
@@ -53,9 +53,9 @@ def finder_donors():
         listbox_blgr.insert(END,i)
     listbox_blgr.place(x = 1220, y = 440)
 
-    button_next = Button(root)
-    button_next.configure(text="Следующие", command=next())
-    button_next.place(height = 40, width = 160 , x = 1220, y = 100)
+    #button_next = Button(root)
+    #button_next.configure(text="Следующие", command=next())
+    #button_next.place(height = 40, width = 160 , x = 1220, y = 100)
 
     root.mainloop()
 
