@@ -2,12 +2,20 @@ from tkinter import *
 from trysql import *
 
 find_rf = 0
+find_offs = 0
 def finder_donors():
-    offs = 0
     def next():
-        # global offs
-        # offs += 1
-        print(offs)
+        global find_offs
+        find_offs += 1
+        print(find_offs)
+        button_clicked()
+
+    def prev():
+        global find_offs
+        if find_offs > 0:
+            find_offs -= 1
+        print(find_offs)
+        button_clicked()
 
     def button_clicked():
         msk = [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -16,7 +24,12 @@ def finder_donors():
                      "дения", "Пол", "Место работы", "Кол-во сдач", "Последняя сдача"]
         for i in range(13):
             a[i].configure(
-                text=atributes[i] + "\n" + find_donors(int(listbox_blgr.curselection()[0]) + 1, find_rf, 0, msk[i]))
+                text=atributes[i] + "\n" + find_donors(int(listbox_blgr.curselection()[0]) + 1, find_rf, find_offs, msk[i]))
+
+    def search_button_clicked():
+        global find_offs
+        find_offs = 0
+        button_clicked()
 
     def ch_rf():
         global find_rf
@@ -53,9 +66,14 @@ def finder_donors():
         listbox_blgr.insert(END,i)
     listbox_blgr.place(x = 1220, y = 440)
 
-    #button_next = Button(root)
-    #button_next.configure(text="Следующие", command=next())
-    #button_next.place(height = 40, width = 160 , x = 1220, y = 100)
+    button_next = Button(root)
+    button_next.configure(text="Следующие", command=next)
+    button_next.place(height = 40, width = 160 , x = 1220, y = 140)
+
+    button_prev = Button(root)
+    button_prev.configure(text="Предыдущие", command=prev)
+    button_prev.place(height = 40, width = 160 , x = 1220, y = 100)
+
 
     root.mainloop()
 
