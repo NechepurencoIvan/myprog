@@ -17,6 +17,16 @@ def finder_donors():
         print(find_offs)
         button_clicked()
 
+    def fbd():
+        results = find_by_ill(reader.get())
+        if(not find_rf == results[0][1]):
+            ch_rf()
+        listbox_blgr.select_set(results[0][0] - 1)
+        button_clicked()
+
+    #def srch_ill
+
+
     def button_clicked():
         msk = [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13]
         atributes = ["#", "Фамилия", "Имя", "Отчество", "Индекс данных", "#донора", "Группа крови", "Резус-фактор",
@@ -74,6 +84,17 @@ def finder_donors():
     button_prev.configure(text="Предыдущие", command=prev)
     button_prev.place(height = 40, width = 160 , x = 1220, y = 100)
 
+    reader = Entry(root)
+    reader.configure(font = "Arial 20")
+    reader.pack(side = "bottom")
+
+    informator = Label(root)
+    informator.configure(text="Введите ФИО болного\nПример: Иванов Иван Иванович", font = "Arial 20")
+    informator.pack(side = "bottom")
+
+    button_dnr = Button(root)
+    button_dnr.configure(text="Искать", command=fbd)
+    button_dnr.pack(side = "bottom")
 
     root.mainloop()
 

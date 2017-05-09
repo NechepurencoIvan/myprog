@@ -27,6 +27,15 @@ def show_donors(col):
         a.append(str(i)[col])
     return '\n'.join(a)
 
+def find_by_ill(string):
+    mylist = string.split()
+    zapr = "SELECT ill.bllood_gr, ill.rf FROM persons, ill WHERE ill.person_id = persons.person_id " \
+"AND persons.fam = \'" + mylist[0] + "\' AND persons.name = \'" + mylist[1] + "\' " \
+"AND persons.otch = \'" + mylist[2] + "\' LIMIT 1"
+    cursor.execute(zapr)
+    results = cursor.fetchall()
+    return results
+
 def find_donors(blgr,rf,ofs,col):
     string = "SELECT * FROM persons, donors WHERE persons.person_id = donors.person_id AND donors.rf = " + \
 str(rf) + " AND donors.bllood_gr = " + str(blgr) + " LIMIT 40 OFFSET " + str(ofs)
