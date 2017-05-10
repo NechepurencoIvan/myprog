@@ -13,6 +13,22 @@ def rand_gen():
         cursor.execute(line)
     zaproses.close()
 
+def don_ill_link_add(args):
+    cursor.execute("INSERT INTO donors_ill (donor_id , ill_id , confirm ) "
+                   "VALUES (\'" + str(args[0]) + "\', \'" + str(args[1]) + "\', \'" + str(args[2]) + "\');")
+    cursor.execute("SELECT * FROM donors_ill")
+    print(cursor.fetchall())
+
+def search_ill_by_name(spisk):
+    cursor.execute("SELECT ill.ill_id FROM ill, persons WHERE ill.person_id = persons.person_id "
+"AND persons.fam = \'" + spisk[0] + "\' AND persons.name = \'" + spisk[1] + "\' AND persons.otch = \'" + spisk[2] + "\'")
+    tbl = cursor.fetchall()
+    return tbl[0][0]
+
+def table_ill(propusk):
+    cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id LIMIT 20 OFFSET " + str(propusk))
+    return cursor.fetchall()
+
 def debug_table(string):
     cursor.execute(string)
     results = cursor.fetchall()
@@ -49,8 +65,6 @@ str(rf) + " AND donors.bllood_gr = " + str(blgr) + " LIMIT 40 OFFSET " + str(ofs
 def show_ills():
     cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id")
     results = cursor.fetchall()
-    for i in results:
-        print(i)
 
 def statistics(col):
     cursor.execute("SELECT sum(passed) AS itogo, count(person_id) AS ludey, work FROM donors GROUP BY work ORDER BY ito"
@@ -66,38 +80,30 @@ def info():
     return ' '.join(a)
 
 def addpers(string):
-    print("Введите фамилию, имя, отчество, контактные данные")
     global numpers
     numpers += 1
     mylist = string.split()
-    #fam = input()
-    #nam = input()
-    #otch = input()
-    #cont = input()
     fam = mylist[0]
     nam = mylist[1]
     otch = mylist[2]
     cont = int(mylist[3])
     c = "INSERT INTO persons (person_id, fam, name, otch, contact_id) VALUES ('" + str(numpers) + "', '" + fam + "','" \
 + nam + "','" + otch + "','" + str(cont) + "');"
-    print(c)
     cursor.execute(c)
 
 def ADDDONOR(string):
-    #addpers()
-    #print('Пример: 1, 1, 1998-01-20, woman, RNPC, 32,2012-01-05')
     global numdon
     mylist = string.split()
     numdon = numdon + 1
     d_id = str(numdon)
     p_id = str(numpers)
-    blgr = mylist[0]#str(input())
-    rf = mylist[1]#str(input())
-    born = mylist[2]#str(input())
-    sex = mylist[3]#str(input())
-    wpl = mylist[4]#str(input())
-    passed = mylist[5]#str(input())
-    passed_lst = mylist[6]#str(input())
+    blgr = mylist[0]
+    rf = mylist[1]
+    born = mylist[2]
+    sex = mylist[3]
+    wpl = mylist[4]
+    passed = mylist[5]
+    passed_lst = mylist[6]
     string = 'INSERT INTO donors (donor_id,person_id,bllood_gr, rf, born, sex, work, passed, lastpass) VALUES (\'' + \
 d_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + born + '\',\'' + sex + '\',\'' + wpl + '\',\'' + \
 passed + '\',\'' + passed_lst + '\');\n'
@@ -105,7 +111,6 @@ passed + '\',\'' + passed_lst + '\');\n'
 
 def ADDILL(string):
     #addpers()
-    print('Пример: 1, 1, injuries, 4')
     global numill
     numill = numill + 1
     mylist = string.split()
