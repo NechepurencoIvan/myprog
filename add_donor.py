@@ -2,9 +2,12 @@ from tkinter import *
 from trysql import *
 
 def adding_person(f):
+    a = recount()
+    numill = a[0]
+    numdon = a[1]
+    numpers = a[2]
     def button_clicked():
         s = reader.get()
-        print(s)
         if (len(s) > 0):
             addpers(reader.get())
             reader.delete(0, 'end')
@@ -40,7 +43,6 @@ def adding_person(f):
 def adding_donor():
     def button_clicked():
         s = reader.get()
-        print(s)
         if (len(s) > 0):
             ADDDONOR(reader.get())
             reader.delete(0, 'end')
@@ -69,7 +71,6 @@ def adding_donor():
 def adding_ill():
     def button_clicked():
         s = reader.get()
-        print(s)
         if (len(s) > 0):
             ADDILL(reader.get())
             reader.delete(0, 'end')
@@ -81,16 +82,17 @@ def adding_ill():
     root_ad.title("Река жизни - добавление больного")
 
     informator = Label(root_ad)
-    informator.configure(text="Введите группу крови, резус-фактор, заболевание, требуемый объем крови\nПример: 1, 1, "
-"injuries, 4", font = "Arial 20")
+    informator.configure(text="Введите группу крови, резус-фактор, заболевание, требуемый объем крови\nПример: 1 1 "
+"injuries 4", font = "Arial 20")
     informator.pack(side = "top", fill = "x")
 
     reader = Entry(root_ad)
     reader.configure(font = "Arial 20")
     reader.pack(side = "top", fill = "x")
 
-    button = Button(root_ad)
-    button.configure(text="Добавить", command=button_clicked,font = "Arial 20")
-    button.pack(side = "top", fill = "x")
+    buttondnr = Button(root_ad)
+    buttondnr.configure(text="Добавить", command=button_clicked,font = "Arial 20")
+    buttondnr.pack(side = "top", fill = "x")
+
 
     root_ad.mainloop()

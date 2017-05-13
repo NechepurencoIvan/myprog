@@ -1,0 +1,4 @@
+DROP TABLE donors;
+DROP TABLE ill;
+DROP TABLE donors_ill;
+DROP TABLE persons;

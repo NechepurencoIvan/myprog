@@ -78,3 +78,4 @@ INSERT INTO persons (person_id, fam, name, otch, contact_id) VALUES ('39', 'Seme
 INSERT INTO ill (ill_id, person_id, bllood_gr ,rf, disease,volume) VALUES ('9', '39','1','1','anemia','1');
 INSERT INTO persons (person_id, fam, name, otch, contact_id) VALUES ('40', 'Semenova','Sophiya','Andreevna','4606');
 INSERT INTO ill (ill_id, person_id, bllood_gr ,rf, disease,volume) VALUES ('10', '40','4','1','homopfilia','1');
+INSERT INTO donors_ill (donor_id, ill_id, confirm) VALUES ('27', '7', '0')

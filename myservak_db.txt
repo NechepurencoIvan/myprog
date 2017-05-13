@@ -1,0 +1,4 @@
+Server	stampy.db.elephantsql.com (stampy-01)
+User & Default database	advvnmxx 
+Password	iYKGeohQtU11_K8aJOOLKKTqgd2qbOsJ 
+URL	postgres://advvnmxx:iYKGeohQtU11_K8aJOOLKKTqgd2qbOsJ@stampy.db.elephantsql.com:5432/advvnmxx

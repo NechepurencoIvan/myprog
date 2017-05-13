@@ -15,7 +15,7 @@ def rand_gen():
 
 def don_ill_link_add(args):
     cursor.execute("INSERT INTO donors_ill (donor_id , ill_id , confirm ) "
-                   "VALUES (\'" + str(args[0]) + "\', \'" + str(args[1]) + "\', \'" + str(args[2]) + "\');")
+                   "VALUES (\'" + str(args[1]) + "\', \'" + str(args[0]) + "\', \'" + str(args[2]) + "\');")
     cursor.execute("SELECT * FROM donors_ill")
     print(cursor.fetchall())
 
@@ -51,6 +51,26 @@ def find_by_ill(string):
     cursor.execute(zapr)
     results = cursor.fetchall()
     return results
+
+def find_for_ill(string):
+    mylist = string.split()
+    zapr = "SELECT ill.ill_id FROM persons, ill WHERE ill.person_id = persons.person_id " \
+           "AND persons.fam = \'" + mylist[0] + "\' AND persons.name = \'" + mylist[1] + "\' " \
+                                                                                         "AND persons.otch = \'" + \
+           mylist[2] + "\' LIMIT 1"
+    cursor.execute(zapr)
+    results = cursor.fetchall()
+    if results == []:
+        return [("Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено",
+                 "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено")]
+    results1 = results[0][0]
+    print(results1)
+    cursor.execute("SELECT persons.*, donors.* FROM persons, donors, donors_ill "
+                   "WHERE persons.person_id = donors.person_id AND donors.donor_id = donors_ill.donor_id "
+                   "AND donors_ill.ill_id = \'" + str(results1) + "\'")
+    results2 = cursor.fetchall()
+    print(results2)
+    return results2
 
 def find_donors(blgr,rf,ofs,col):
     string = "SELECT * FROM persons, donors WHERE persons.person_id = donors.person_id AND donors.rf = " + \
@@ -124,15 +144,12 @@ def ADDILL(string):
 ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\'' + vol + '\');\n'
     cursor.execute(string)
 
-
 def init():
     global numpers, numdon, numill,conn,cursor
-    numpers = 0
-    numdon = 0
-    numill = 0
     conn = sqlite3.connect('Chinook_Sqlite.sqlite')
     cursor = conn.cursor()
     rand_gen()
+    cursor.execute('CREATE TABLE krypto (numb int,shifr text)')
     cursor.execute("SELECT count(person_id) FROM persons")
     results = cursor.fetchall()
     numpers = int(results[0][0])
@@ -142,3 +159,18 @@ def init():
     cursor.execute("SELECT count(ill_id) FROM ill")
     results = cursor.fetchall()
     numill = int(results[0][0])
+    print("ss" + str(numill))
+    return[numill,numdon,numpers]
+
+def recount():
+    cursor.execute("SELECT count(person_id) FROM persons")
+    results = cursor.fetchall()
+    numpers = int(results[0][0])
+    cursor.execute("SELECT count(donor_id) FROM donors")
+    results = cursor.fetchall()
+    numdon = int(results[0][0])
+    cursor.execute("SELECT count(ill_id) FROM ill")
+    results = cursor.fetchall()
+    numill = int(results[0][0])
+    print("ss" + str(numill))
+    return[numill,numdon,numpers]

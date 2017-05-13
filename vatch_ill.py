@@ -2,8 +2,14 @@ from tkinter import *
 from trysql import *
 
 vill_offs = 0
-def ill_obsrerve():
 
+def ill_obsrerve():
+    a = recount()
+    numill = a[0]
+    numdon = a[1]
+    numpers = a[2]
+    size = numill
+    print("SSS"+ str(size))
     def next():
         global vill_offs
         vill_offs += 1
@@ -18,15 +24,15 @@ def ill_obsrerve():
     def built():
         arr = table_ill(vill_offs)
         print(arr)
-        msk = [0, 1, 2, 3, 4, 7, 8, 9, 10]
+        msk = [5, 1, 2, 3, 4, 7, 8, 9, 10]
         atributes = ["#Больного", "Фамилия", "Имя", "Отчество", "Индекс данных", "Группа крови", "Резус-фактор",
             "Заболевание", "Требуемый объем"]
         try:
             for i in range(9):
                 spsk = []
-                for j in range(5):
+                print(size)
+                for j in range(min(7,size)):
                     spsk.append(str(arr[j][msk[i]]))
-                print(spsk)
                 string = atributes[i] + "\n" + "\n".join(spsk)
                 a[i].configure(text=string)
         except:
