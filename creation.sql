@@ -13,7 +13,7 @@ CREATE TABLE persons (
 CREATE TABLE donors (
     donor_id int NOT NULL,
     person_id int NOT NULL,
-    bllood_gr int NOT NULL CHECK (bllood_gr = '1' OR bllood_gr = '2' OR bllood_gr = '3' OR bllood_gr = '4' OR),
+    bllood_gr int NOT NULL CHECK (bllood_gr = '1' OR bllood_gr = '2' OR bllood_gr = '3' OR bllood_gr = '4'),
     rf boolean NOT NULL,
     born date NOT NULL,
     sex text,
@@ -25,7 +25,7 @@ CREATE TABLE donors (
 CREATE TABLE ill (
     ill_id int NOT NULL,
     person_id int NOT NULL,
-    bllood_gr int NOT NULL CHECK (bllood_gr = '1' OR bllood_gr = '2' OR bllood_gr = '3' OR bllood_gr = '4' OR),
+    bllood_gr int NOT NULL CHECK (bllood_gr = '1' OR bllood_gr = '2' OR bllood_gr = '3' OR bllood_gr = '4'),
     rf boolean NOT NULL,
     disease text NOT NULL,
     volume int NOT NULL,

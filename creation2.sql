@@ -1,4 +1,5 @@
-CREATE TABLE persons (person_id int, fam text, name text, otch text, contact_id int);
-CREATE TABLE donors (donor_id int,person_id int, bllood_gr int, rf boolean,born date, sex text,work text, passed int, lastpass date);
-CREATE TABLE ill (ill_id int, person_id int, bllood_gr int, rf boolean, disease text,volume int);
-CREATE TABLE donors_ill (donor_id int, ill_id int, confirm bool);
+CREATE TABLE persons (person_id INT NOT NULL, fam TEXT NOT NULL, name TEXT NOT NULL, otch TEXT, contact_id INT NOT NULL, PRIMARY KEY(person_id));
+CREATE TABLE donors (donor_id int NOT NULL, person_id int NOT NULL, bllood_gr int NOT NULL CHECK (bllood_gr = '1' OR bllood_gr = '2' OR bllood_gr = '3' OR bllood_gr = '4'), rf boolean NOT NULL, born date NOT NULL, sex text, work text, passed int, lastpass date, PRIMARY KEY(person_id));
+CREATE TABLE ill ( ill_id int NOT NULL, person_id int NOT NULL, bllood_gr int NOT NULL CHECK (bllood_gr = '1' OR bllood_gr = '2' OR bllood_gr = '3' OR bllood_gr = '4'), rf boolean NOT NULL, disease text NOT NULL, volume int NOT NULL, PRIMARY KEY(person_id));
+CREATE TABLE donors_ill (donor_id int NOT NULL, ill_id int NOT NULL, confirm bool NOT NULL, PRIMARY KEY(donor_id));
+CREATE TABLE hashes(contact_id int CHECK(contact_id < '10000'), hash TEXT, PRIMARY KEY(contact_id));
