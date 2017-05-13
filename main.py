@@ -2,7 +2,6 @@
 from tkinter import *
 from trysql import *
 from rsa import *
-#from stupidfile import *
 from add_donor import *
 from finder_graph import *
 from statistiks import *

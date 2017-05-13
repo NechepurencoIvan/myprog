@@ -1,5 +1,6 @@
 from tkinter import *
 from trysql import *
+from code_window import *
 
 find_rf = 0
 find_acc = 0
@@ -33,9 +34,8 @@ def finder_donors():
 
     def button_clicked():
         msk = [5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13]
-        atributes = ["#Больного", "Фамилия", "Имя", "Отчество", "Индекс данных", "#донора", "Группа крови", "Резус-фактор",
-                     "Дата рож"
-                     "дения", "Пол", "Место работы", "Кол-во сдач", "Последняя сдача"]
+        atributes = ["#донора", "Фамилия", "Имя", "Отчество", "Индекс данных", "#человека", "Группа крови", \
+        "Резус-фактор", "Дата рождения", "Пол", "Место работы", "Кол-во сдач", "Последняя сдача"]
         for i in range(13):
             a[i].configure(
                 text=atributes[i] + "\n" + find_donors(int(listbox_blgr.curselection()[0]) + 1, find_rf, find_offs, msk[i]))
@@ -81,6 +81,10 @@ def finder_donors():
     button = Button(root)
     button.configure(text="Поиск", command = search_button_clicked)
     button.place(height = 40, width = 160 , x = 1220, y = 400)
+
+    contact_button = Button(root)
+    contact_button.configure(text="Получить контакты", command = contact_window)
+    contact_button.place(height = 40, width = 160 , x = 1220, y = 0)
 
     #rf = 0
     button_rf = Button(root)

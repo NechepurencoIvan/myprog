@@ -17,10 +17,6 @@ def d_i_t():
         print(arr)
         j = len(arr)
         print(str(j))
-        msk = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-        atributes = ["#Больного", "Фамилия", "Имя", "Отчество", "Индекс данных", "Группа крови", "Резус-фактор",
-            "Заболевание", "Требуемый объем","#Больного", "Фамилия", "Имя", "Отчество", "Индекс данных", "Группа крови", "Резус-фактор",
-            "Заболевание", "Требуемый объем"]
         for i in range(14):
             spsk = []
             for j in range(min(10,len(arr))):
@@ -51,32 +47,11 @@ def d_i_t():
     button_search.configure(text="Искать", command=fbi)
     button_search.place(height = 50, width = 160 ,x = 1220,y = 50)
 
-
-
-    #rf = 0
-    #button_rf = Button(root)
-    #button_rf.configure(text=("Резус-фактор: " + str(find_rf)), command=ch_rf)
-    #button_rf.place(height = 40, width = 160 , x = 1220, y = 200)
-
     a = []
     labelinfo  = Label(root)
     for i in range(14):
         a.append(Label(root))
         a[i].pack(side = 'left')
-
-    #listbox_blgr=Listbox(root,height=4,width=160,selectmode=EXTENDED)
-    #list_blgr=[1,2,3,4]
-    #for i in list_blgr:
-    #    listbox_blgr.insert(END,i)
-    #listbox_blgr.place(x = 1220, y = 240)
-
-    #button_next = Button(root)
-    #button_next.configure(text="Следующие", command=next)
-    #button_next.place(height = 40, width = 160 , x = 1220, y = 140)
-
-    #button_prev = Button(root)
-    #button_prev.configure(text="Предыдущие", command=prev)
-    #button_prev.place(height = 40, width = 160 , x = 1220, y = 100)
 
     root.mainloop()
 
