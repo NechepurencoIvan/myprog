@@ -1,17 +1,24 @@
 import sqlite3
-
-#DDL = open('creation2.sql')
-#for line in DDL:
-#    line
-#    print(line)
-#    cursor.execute(line)
+from try_codification import *
 
 def rand_gen():
-    zaproses = open('zaproses.sql')
+    zaproses = open('zaproses.sql','r')
     for line in zaproses:
         line
         cursor.execute(line)
     zaproses.close()
+
+def randstuff():
+    return("randomname_randomnamovich@mail.ru +79536661313")
+
+def get_cd(num):
+    cursor.execute("SELECT hash FROM hashes WHERE contact_id = \'" + num + "\'")
+    a = cursor.fetchall()
+    if(len(a) == 0):
+        return randstuff()
+    p = a[0][0].replace('\\\'','\'').replace('\'\'','\"').replace('\\\\','\\')
+    return decodificate(p)
+
 
 def don_ill_link_add(args):
     cursor.execute("INSERT INTO donors_ill (donor_id , ill_id , confirm ) "
@@ -21,7 +28,8 @@ def don_ill_link_add(args):
 
 def search_ill_by_name(spisk):
     cursor.execute("SELECT ill.ill_id FROM ill, persons WHERE ill.person_id = persons.person_id "
-"AND persons.fam = \'" + spisk[0] + "\' AND persons.name = \'" + spisk[1] + "\' AND persons.otch = \'" + spisk[2] + "\'")
+    "AND persons.fam = \'" + spisk[0] + "\' AND persons.name = \'" + spisk[1] + "\' "
+    "AND persons.otch = \'" + spisk[2] + "\'")
     tbl = cursor.fetchall()
     return tbl[0][0]
 
@@ -124,7 +132,7 @@ def ADDDONOR(string):
     wpl = mylist[4]
     passed = mylist[5]
     passed_lst = mylist[6]
-    string = 'INSERT INTO donors (donor_id,person_id,bllood_gr, rf, born, sex, work, passed, lastpass) VALUES (\'' + \
+    string = 'INSERT INTO donors (donor_id, person_id, bllood_gr, rf, born, sex, work, passed, lastpass) VALUES (\'' + \
 d_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + born + '\',\'' + sex + '\',\'' + wpl + '\',\'' + \
 passed + '\',\'' + passed_lst + '\');\n'
     cursor.execute(string)
@@ -146,10 +154,16 @@ ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\
 
 def init():
     global numpers, numdon, numill,conn,cursor
-    conn = sqlite3.connect('Chinook_Sqlite.sqlite')
+    conn = sqlite3.connect('database.sqlite')
     cursor = conn.cursor()
+#    DDL = open('creation2.sql')
+#    for line in DDL:
+#        line
+#        print(line)
+#        cursor.execute(line)
     rand_gen()
-    cursor.execute('CREATE TABLE krypto (numb int,shifr text)')
+    cursor.execute('SELECT * FROM hashes')
+    print(cursor.fetchall())
     cursor.execute("SELECT count(person_id) FROM persons")
     results = cursor.fetchall()
     numpers = int(results[0][0])
@@ -159,17 +173,16 @@ def init():
     cursor.execute("SELECT count(ill_id) FROM ill")
     results = cursor.fetchall()
     numill = int(results[0][0])
-    print("ss" + str(numill))
     return[numill,numdon,numpers]
 
 def recount():
-    cursor.execute("SELECT count(person_id) FROM persons")
+    cursor.execute("SELECT max(person_id) FROM persons")
     results = cursor.fetchall()
     numpers = int(results[0][0])
-    cursor.execute("SELECT count(donor_id) FROM donors")
+    cursor.execute("SELECT max(donor_id) FROM donors")
     results = cursor.fetchall()
     numdon = int(results[0][0])
-    cursor.execute("SELECT count(ill_id) FROM ill")
+    cursor.execute("SELECT max(ill_id) FROM ill")
     results = cursor.fetchall()
     numill = int(results[0][0])
     print("ss" + str(numill))
