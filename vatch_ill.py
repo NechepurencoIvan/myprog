@@ -1,5 +1,6 @@
 from tkinter import *
 from trysql import *
+from code_window import *
 
 vill_offs = 0
 
@@ -9,29 +10,30 @@ def ill_obsrerve():
     numdon = a[1]
     numpers = a[2]
     size = numill
-    print("SSS"+ str(size))
+    print(size)
+
     def next():
         global vill_offs
-        vill_offs += 1
-        built()
+        if vill_offs + 5 < size:
+            vill_offs += 5
+            build()
 
     def prev():
         global vill_offs
-        if vill_offs > 0:
-            vill_offs -= 1
-        built()
+        if vill_offs >= 5:
+            vill_offs -= 5
+        build()
 
-    def built():
+    def build():
         arr = table_ill(vill_offs)
-        print(arr)
+        size = len(arr)
         msk = [5, 1, 2, 3, 4, 7, 8, 9, 10]
         atributes = ["#Больного", "Фамилия", "Имя", "Отчество", "Индекс данных", "Группа крови", "Резус-фактор",
             "Заболевание", "Требуемый объем"]
         try:
             for i in range(9):
                 spsk = []
-                print(size)
-                for j in range(min(7,size)):
+                for j in range(min(15,size)):
                     spsk.append(str(arr[j][msk[i]]))
                 string = atributes[i] + "\n" + "\n".join(spsk)
                 a[i].configure(text=string)
@@ -41,7 +43,7 @@ def ill_obsrerve():
     def search_button_clicked():
         global find_offs
         find_offs = 0
-        built()
+        build()
 
     root = Tk()
     root["bg"] = "green"
@@ -62,6 +64,10 @@ def ill_obsrerve():
     button_prev.configure(text="Предыдущие", command=prev)
     button_prev.place(height = 40, width = 160 , x = 1220, y = 100)
 
-    built()
+    contact_button = Button(root)
+    contact_button.configure(text="Получить контакты", command = contact_window)
+    contact_button.place(height = 40, width = 160 , x = 1220, y = 0)
+
+    build()
     root.mainloop()
 

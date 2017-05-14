@@ -1,11 +1,17 @@
 import random
-names_m = ['Ivan', 'Semen', 'Andrew', 'Alexandr', 'Peter']
-families_m = ['Ivanov', 'Semenov', 'Andreev', 'Alexandrov', 'Peterov']
-otshestvs_m = ['Ivanovich', 'Semenovich', 'Andreevich', 'Alexandrovich', 'Peterovich']
-names_fm = ['Maria', 'Sophiya', 'Anna', 'Elena', 'Galina']
-families_fm = ['Ivanova', 'Semenova', 'Andreeva', 'Alexandrova', 'Peterova']
-otshestvs_fm = ['Ivanovna', 'Semenovna', 'Andreevna', 'Alexandrovna', 'Peterovna']
-desiases = ['homopfilia', 'anemia', 'injuries']
+from try_codification import *
+
+names_m = ['Ivan', 'Semen', 'Andrew', 'Alexandr', 'Peter', 'Mark', 'Kirill', 'Stepan', 'Oleg', 'Igor', 'Maksim']
+families_m = ['Ivanov', 'Semenov', 'Andreev', 'Alexandrov', 'Petrov', 'Serov', 'Mixaylov', 'Nechepurenco', \
+'Mesherykov', 'Sobakin', 'Pheophanov', 'Bogomol']
+otshestvs_m = ['Ivanovich', 'Semenovich', 'Andreevich', 'Alexandrovich', 'Petrovich', 'Markovich', 'Kirillovich',\
+'Stepanovich', 'Olegovich', 'Igorevich', 'Maksimovich']
+names_fm = ['Maria', 'Sophiya', 'Anna', 'Elena', 'Galina', 'Irina', 'Svetlana', 'Inna', 'Polina']
+families_fm = ['Ivanova', 'Semenova', 'Andreeva', 'Alexandrova', 'Petrova', 'Serova', 'Mixaylova', 'Nechepurenco', \
+'Mesherykova', 'Sobakina', 'Pheophanova', 'Bogomol']
+otshestvs_fm = ['Ivanovna', 'Semenovna', 'Andreevna', 'Alexandrovna', 'Peterovna','Markovina', 'Kirillovna',\
+'Stepanovna', 'Olegovna', 'Igorevna', 'Maksimovna']
+desiases = ['hemopfilia', 'anemia', 'injuries', 'other', 'vampirism']
 sexes = ['man', 'woman']
 works = ['RNPC', 'teacher', 'deputate', 'non-working', 'student', 'driver']
 bldgrps = [1, 2, 3, 4]
@@ -16,6 +22,10 @@ no_persons = 0
 no_donors = 0
 no_ill = 0
 a = 0
+contacts = ['someeamail@mail.ru 367363','2536253', 'jdjkdcddfk']
+
+used_cd = []
+
 zaproses = open("zaproses.sql", "w")
 
 def get_rand_dateb():
@@ -37,7 +47,14 @@ def addpersons(sex):
         p_nam = random.choice(names_fm)
         p_otch = random.choice(otshestvs_fm)
     cd = str(random.randint(0, 10000))
-    string = 'INSERT INTO persons (person_id, fam, name, otch, contact_id) VALUES (\'' + p_id + '\', \'' + p_fam + '\',\'' + p_nam + '\',\'' +  p_otch + '\',\'' +  cd + '\');\n'
+    while cd in used_cd:
+        cd = str(random.randint(0, 10000))
+    used_cd.append(cd)
+    for_cntct_str = codificate(random.choice(contacts)).replace('\\','\\\\').replace('\"','\'\'').replace('\'','\\\'')
+    string = 'INSERT INTO hashes (contact_id, hash) VALUES (\'' + cd + '\', \"' + for_cntct_str + '\");\n'
+    zaproses.write(string)
+    string = 'INSERT INTO persons (person_id, fam, name, otch, contact_id) VALUES (\'' + p_id + '\', \'' + p_fam + \
+        '\',\'' + p_nam + '\',\'' +  p_otch + '\',\'' +  cd + '\');\n'
     zaproses.write(string)
 
 def adddonor():
@@ -75,9 +92,13 @@ def addill():
 ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\'' + vol + '\');\n'
     zaproses.write(string)
 
-for i in range(30):
+for i in range(40):
     adddonor()
-for i in range(10):
+for i in range(20):
+    addill()
+for i in range(40):
+    adddonor()
+for i in range(20):
     addill()
 
 zaproses.close()

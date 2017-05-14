@@ -2,49 +2,73 @@ from tkinter import *
 from trysql import *
 
 def adding_person(f):
-    a = recount()
-    numill = a[0]
-    numdon = a[1]
-    numpers = a[2]
+#    a = recount()
+#    numill = a[0]
+#    numdon = a[1]
+#    numpers = a[2]
     def button_clicked():
         s = reader.get()
         if (len(s) > 0):
-            addpers(reader.get())
-            reader.delete(0, 'end')
-            root.destroy()
-            if f == 1:
-                adding_donor()
-                debug_table("SELECT * FROM persons, donors WHERE persons.person_id = donors.person_id")
-            else:
-                adding_ill()
-                debug_table("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id")
+            root_ap.destroy()
+            adding_cd(f,s)
 
-
-    root = Tk()
-    root["bg"] = "green"
+    root_ap = Tk()
+    root_ap["bg"] = "green"
     #root.state("zoomed")
-    root.title("Река жизни - добавление человека")
+    root_ap.title("Река жизни - добавление человека")
 
-    informator = Label(root)
+    informator = Label(root_ap)
     informator.configure(text="Введите ФИО, контактные даннные\nПример: Иванов Иван Иванович 123456789", font = "Arial 20")
     informator.pack(side = "top", fill = "x")
 
-    reader = Entry(root)
+    reader = Entry(root_ap)
     reader.configure(font = "Arial 20")
     reader.pack(side = "top", fill = "x")
 
-    button = Button(root)
+    button = Button(root_ap)
+    button.configure(text="Добавить", command=button_clicked,font = "Arial 20")
+    button.pack(side = "top", fill = "x")
+
+    root_ap.mainloop()
+
+def adding_cd(f,s1):
+    def button_clicked():
+        s = reader.get()
+        root1.destroy()
+        if f == 1:
+            adding_donor(s1,s)
+        else:
+            adding_ill(s1,s)
+
+    root1 = Tk()
+    root1["bg"] = "green"
+    #root.state("zoomed")
+    root1.title("Река жизни - добавление человека")
+
+    informator = Label(root1)
+    informator.configure(text="Введите контактные данные", font = "Arial 20")
+    informator.pack(side = "top", fill = "x")
+
+    reader = Entry(root1)
+    reader.configure(font = "Arial 20")
+    reader.pack(side = "top", fill = "x")
+
+    button = Button(root1)
     button.configure(text="Добавить", command=button_clicked,font = "Arial 20")
     button.pack(side = "top", fill = "x")
 
 
-    root.mainloop()
+    root1.mainloop()
+    return 1
 
-def adding_donor():
+def adding_donor(s1,s2):
     def button_clicked():
         s = reader.get()
         if (len(s) > 0):
             ADDDONOR(reader.get())
+            cd = get_unused_ncd()
+            ya_ustal_pridumivat_imena_functiyam(cd, s2)
+            addpers(s1,cd)
             reader.delete(0, 'end')
             debug_table("SELECT * FROM donors")
             root_ad.destroy()
@@ -68,13 +92,16 @@ def adding_donor():
 
     root_ad.mainloop()
 
-def adding_ill():
+def adding_ill(s1,s2):
+    print("cdfd")
     def button_clicked():
         s = reader.get()
         if (len(s) > 0):
             ADDILL(reader.get())
+            cd = get_unused_ncd()
+            ya_ustal_pridumivat_imena_functiyam(cd, s2)
+            addpers(s1,cd)
             reader.delete(0, 'end')
-            debug_table("SELECT * FROM donors")
             root_ad.destroy()
     root_ad = Tk()
     root_ad["bg"] = "green"

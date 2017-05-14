@@ -17,11 +17,8 @@ numpers = a[2]
 #a a a 1
 #1 1 1998-01-20 woman RNPC 32 2012-01-05
 
-print("Z" + str(numill))
 def addition_d():
     adding_person(1)
-    print("Bil zdes")
-    debug_table("SELECT donor_id, person_id FROM  donors")
 
 def addition_i():
     adding_person(0)

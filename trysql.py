@@ -1,4 +1,5 @@
 import sqlite3
+import random
 from try_codification import *
 
 def rand_gen():
@@ -23,8 +24,6 @@ def get_cd(num):
 def don_ill_link_add(args):
     cursor.execute("INSERT INTO donors_ill (donor_id , ill_id , confirm ) "
                    "VALUES (\'" + str(args[1]) + "\', \'" + str(args[0]) + "\', \'" + str(args[2]) + "\');")
-    cursor.execute("SELECT * FROM donors_ill")
-    print(cursor.fetchall())
 
 def search_ill_by_name(spisk):
     cursor.execute("SELECT ill.ill_id FROM ill, persons WHERE ill.person_id = persons.person_id "
@@ -72,12 +71,10 @@ def find_for_ill(string):
         return [("Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено",
                  "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено", "Не найдено")]
     results1 = results[0][0]
-    print(results1)
     cursor.execute("SELECT persons.*, donors.* FROM persons, donors, donors_ill "
                    "WHERE persons.person_id = donors.person_id AND donors.donor_id = donors_ill.donor_id "
                    "AND donors_ill.ill_id = \'" + str(results1) + "\'")
     results2 = cursor.fetchall()
-    print(results2)
     return results2
 
 def find_donors(blgr,rf,ofs,col):
@@ -107,22 +104,28 @@ def info():
     a = ["На настоящий момент в базе", str(numpers), "человек:", str(numdon), "донор(ов) и", str(numill), "больных(ой)"]
     return ' '.join(a)
 
-def addpers(string):
+def addpers(string, cd):
     global numpers
-    numpers += 1
+#    numpers = 1
+    print('p')
+    print(numpers)
     mylist = string.split()
     fam = mylist[0]
     nam = mylist[1]
     otch = mylist[2]
-    cont = int(mylist[3])
+    cont = cd
     c = "INSERT INTO persons (person_id, fam, name, otch, contact_id) VALUES ('" + str(numpers) + "', '" + fam + "','" \
 + nam + "','" + otch + "','" + str(cont) + "');"
     cursor.execute(c)
 
 def ADDDONOR(string):
-    global numdon
+    global numdon, numpers
     mylist = string.split()
     numdon = numdon + 1
+    numpers += 1
+    print("d")
+    print(numpers)
+    print(numdon)
     d_id = str(numdon)
     p_id = str(numpers)
     blgr = mylist[0]
@@ -139,15 +142,19 @@ passed + '\',\'' + passed_lst + '\');\n'
 
 def ADDILL(string):
     #addpers()
-    global numill
+    global numill, numpers
     numill = numill + 1
+    numpers = numpers + 1
+    print('i')
+    print(numill)
+    print(numpers)
     mylist = string.split()
     ill_id = str(numill)
     p_id = str(numpers)
-    blgr = mylist[0]#str(input())
-    rf = mylist[1]#str(input())
-    dis = mylist[2]#str(input())
-    vol = mylist[3]#str(input())
+    blgr = mylist[0]
+    rf = mylist[1]
+    dis = mylist[2]
+    vol = mylist[3]
     string = 'INSERT INTO ill (ill_id, person_id, bllood_gr ,rf, disease,volume) VALUES (\'' + \
 ill_id + '\', \'' + p_id + '\',\'' + blgr + '\',\'' + rf + '\',\'' + dis + '\',\'' + vol + '\');\n'
     cursor.execute(string)
@@ -163,7 +170,6 @@ def init():
 #        cursor.execute(line)
     rand_gen()
     cursor.execute('SELECT * FROM hashes')
-    print(cursor.fetchall())
     cursor.execute("SELECT count(person_id) FROM persons")
     results = cursor.fetchall()
     numpers = int(results[0][0])
@@ -185,5 +191,16 @@ def recount():
     cursor.execute("SELECT max(ill_id) FROM ill")
     results = cursor.fetchall()
     numill = int(results[0][0])
-    print("ss" + str(numill))
     return[numill,numdon,numpers]
+
+def get_unused_ncd():
+    cursor.execute("SELECT contact_id FROM hashes")
+    used_cd = cursor.fetchall()
+    cd = str(random.randint(0, 10000))
+    while (cd) in used_cd:
+        cd = str(random.randint(0, 10000))
+    return cd
+
+def ya_ustal_pridumivat_imena_functiyam(cd,non_coded):
+    for_cntct_str = codificate(non_coded).replace('\\','\\\\').replace('\"','\'\'').replace('\'','\\\'')
+    cursor.execute('INSERT INTO hashes (contact_id, hash) VALUES (\'' + cd + '\', \"' + for_cntct_str + '\")')
