@@ -35,7 +35,7 @@ CREATE TABLE donors_ill (
     donor_id int NOT NULL,
     ill_id int NOT NULL,
     confirm bool NOT NULL,
-    PRIMARY KEY(person_id)
+    CONSTRAINT PRIMARY KEY(person_id, ill_id)
 );
 
 CREATE TABLE hashes(
