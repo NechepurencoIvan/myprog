@@ -41,7 +41,8 @@ def search_ill_by_name(spisk):
 
 
 def table_ill(propusk):
-    cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id LIMIT 25 OFFSET " + str(propusk))
+    cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id "
+                   "ORDER BY volume DESC LIMIT 25 OFFSET " + str(propusk))
     return cursor.fetchall()
 
 
@@ -92,10 +93,16 @@ def find_for_ill(string):
     results2 = cursor.fetchall()
     return results2
 
+def del_ill(string):
+    mylist = string.split()
+    zapr = "DELETE FROM persons WHERE persons.fam = \'" + mylist[0] + "\' AND persons.name = \'" \
+           + mylist[1] + "\' AND persons.otch = \'" + mylist[2] + "\'"
+    cursor.execute(zapr)
+
 
 def find_donors(blgr, rf, ofs, col):
     string = "SELECT * FROM persons, donors WHERE persons.person_id = donors.person_id AND donors.rf = " + \
-        str(rf) + " AND donors.bllood_gr = " + str(blgr) + " LIMIT 25 OFFSET " + str(ofs)
+        str(rf) + " AND donors.bllood_gr = " + str(blgr) + " ORDER BY donors.lastpass DESC LIMIT 25 OFFSET " + str(ofs)
     cursor.execute(string)
     results = cursor.fetchall()
     a = []

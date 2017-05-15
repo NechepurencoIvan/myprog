@@ -14,6 +14,11 @@ def d_i_t():
         find_for_ill(spsk)
         button_clicked()
 
+    def del_but():
+        spsk = reader.get()
+        del_ill(spsk)
+        button_clicked()
+
     def button_clicked():
         msk = [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14]
         atributes = ["#Больного", "Фамилия", "Имя", "Отчество", "Индекс данных", "#донора", "Группа крови",
@@ -47,6 +52,10 @@ def d_i_t():
     contact_button = Button(root)
     contact_button.configure(text="Получить контакты", command=button_cd_clicked)
     contact_button.place(height=50, width=160, x=1220, y=655)
+
+    delete_button = Button(root)
+    delete_button.configure(text="Удалить", command=del_but)
+    delete_button.place(height=50, width=160, x=1220, y=100)
 
     reader_cd = Entry(root)
     reader_cd.configure(font="Arial 20")
