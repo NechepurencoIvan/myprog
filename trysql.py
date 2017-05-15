@@ -5,6 +5,8 @@ from try_codification import *
 numpers = 0
 numdon = 0
 numill = 0
+bolnoy = ''
+
 
 def rand_gen():
     zaproses = open('zaproses.sql', 'r')
@@ -39,7 +41,7 @@ def search_ill_by_name(spisk):
 
 
 def table_ill(propusk):
-    cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id LIMIT 20 OFFSET " + str(propusk))
+    cursor.execute("SELECT * FROM persons, ill WHERE persons.person_id = ill.person_id LIMIT 25 OFFSET " + str(propusk))
     return cursor.fetchall()
 
 

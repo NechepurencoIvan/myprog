@@ -36,7 +36,7 @@ def ill_obsrerve():
 
         for ind in range(9):
             spsk = []
-            for j in range(min(15, siz)):
+            for j in range(min(25, siz)):
                 spsk.append(str(arr[j][msk[ind]]))
                 if(j >= len(arr)):
                     print()
@@ -50,7 +50,7 @@ def ill_obsrerve():
 
     a = []
     for i in range(9):
-        a.append(Label(root))
+        a.append(Label(root, bg='green', font="Arial 14"))
         a[i].pack(side='left')
 
     button_next = Button(root)

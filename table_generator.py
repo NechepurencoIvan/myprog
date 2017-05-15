@@ -1,17 +1,17 @@
 import random
 from try_codification import *
 
-names_m = ['Ivan', 'Semen', 'Andrew', 'Alexandr', 'Peter', 'Mark', 'Kirill', 'Stepan', 'Oleg', 'Igor', 'Maksim']
-families_m = ['Ivanov', 'Semenov', 'Andreev', 'Alexandrov', 'Petrov', 'Serov', 'Mixaylov', 'Nechepurenco', 'Mesherykov',
-              'Sobakin', 'Pheophanov', 'Bogomol', 'Molchanov', 'Anisimov', 'Shavrin', 'Kalgushkin', 'Mixaylov',
+names_m = ['Ivan', 'Semen', 'Andrey', 'Alexandr', 'Peter', 'Mark', 'Kiril', 'Stepan', 'Oleg', 'Igor', 'Maksim']
+families_m = ['Ivanov', 'Semenov', 'Andreev', 'Alexandrov', 'Petrov', 'Serov', 'Mihaylov', 'Nechepurenco', 'Mesherykov',
+              'Sobakin', 'Pheophanov', 'Bogomol', 'Molchanov', 'Anisimov', 'Shavrin', 'Kalgushkin', 'Mihaylov',
               'Liferenko', 'Marchenko', 'Roslovtsev', 'Zhukovskiy']
-otshestvs_m = ['Ivanovich', 'Semenovich', 'Andreevich', 'Alexandrovich', 'Petrovich', 'Markovich', 'Kirillovich',
+otshestvs_m = ['Ivanovich', 'Semenovich', 'Andreevich', 'Alexandrovich', 'Petrovich', 'Markovich', 'Kirilovich',
                'Stepanovich', 'Olegovich', 'Igorevich', 'Maksimovich']
 names_fm = ['Maria', 'Sophiya', 'Anna', 'Elena', 'Galina', 'Irina', 'Svetlana', 'Inna', 'Polina']
 families_fm = ['Ivanova', 'Semenova', 'Andreeva', 'Alexandrova', 'Petrova', 'Serova', 'Mixaylova', 'Nechepurenco',
                'Mesherykova', 'Sobakina', 'Pheophanova', 'Bogomol', 'Molchanova', 'Anisimova', 'Shavrina',
-               'Kalgushkina', 'Mixaylova', 'Liferenko', 'Marchenko', 'Roslovtseva', 'Zhukovskaya']
-otshestvs_fm = ['Ivanovna', 'Semenovna', 'Andreevna', 'Alexandrovna', 'Peterovna', 'Markovina', 'Kirillovna',
+               'Kalgushkina', 'Mihaylova', 'Liferenko', 'Marchenko', 'Roslovtseva', 'Zhukovskaya']
+otshestvs_fm = ['Ivanovna', 'Semenovna', 'Andreevna', 'Alexandrovna', 'Petrovna', 'Markovna', 'Kirilovna',
                 'Stepanovna', 'Olegovna', 'Igorevna', 'Maksimovna']
 desiases = ['hemopfilia', 'anemia', 'injuries', 'other', 'vampirism']
 sexes = ['man', 'woman']
@@ -21,7 +21,7 @@ resfacts = [0, 1]
 days = ['01', '05', '08', '14', '17', '20', '25']
 months = ['01', '03', '6', '9', '11']
 
-contacts = ['someeamail@mail.ru 367363', '253-625', 'jdjkdcddfk', 'somebody_once_told_me@google.com',
+contacts = ['someeamail@mail.ru 367363', 'jdjkdcddfk', 'somebody_once_told_me@google.com',
             'www.leningrad.ru', 'I\'m bored to invent names', '8-800-555-35-35', '241-141 gruzomviki',
             'mladshiyleytenantt@malchik.molodoy', 'anotherfake@fakes.ru']
 
@@ -115,10 +115,10 @@ for i in range(60):
 
 another_spisok = []
 for i in range(500):
-    a = str(random.randint(1, 241))
-    b = str(random.randint(1, 121))
-    if not (a,b) in another_spisok:
-        another_spisok.append((a,b))
+    a = str(random.randint(1, 240))
+    b = str(random.randint(1, 120))
+    if not (a, b) in another_spisok:
+        another_spisok.append((a, b))
         zaproses.write('INSERT INTO donors_ill (donor_id, ill_id, confirm) VALUES (\'' + a +
                        '\', \'' + b + '\', \'' + str(random.randint(0, 1)) + '\');\n')
 

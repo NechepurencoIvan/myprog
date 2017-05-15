@@ -37,13 +37,10 @@ def finder_donors():
         msk = [5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13]
         atributes = ["#донора", "Фамилия", "Имя", "Отчество", "Индекс данных", "#человека", "Группа крови",
                      "Резус-фактор", "Дата рождения", "Пол", "Место работы", "Кол-во сдач", "Последняя сдача"]
-#        try:
         p = listbox_blgr.curselection()[0]
         for ind in range(13):
             a[ind].configure(
                  text=atributes[ind] + "\n" + find_donors(int(p) + 1, find_rf, find_offs, msk[ind]))
-#        except:
-#            print('ничего страшного')
 
     def search_button_clicked():
         global find_offs
@@ -96,7 +93,7 @@ def finder_donors():
 
     a = []
     for i in range(13):
-        a.append(Label(root, bg='green'))
+        a.append(Label(root, bg='green', font="Arial 10"))
         a[i].pack(side='left')
 
     listbox_blgr = Listbox(root, height=4, width=160, selectmode=EXTENDED)
@@ -134,7 +131,7 @@ def finder_donors():
     nd.place(height=50, width=50, x=700, y=605)
 
     button_acc = Button(root)
-    button_acc.configure(text=("Согласие: " + getagrfrbool(find_rf)), command=ch_acc)
+    button_acc.configure(text=("Согласие: " + getagrfrbool(find_acc)), command=ch_acc)
     button_acc.place(height=50, width=160, x=750, y=605)
 
     button_dnr = Button(root)

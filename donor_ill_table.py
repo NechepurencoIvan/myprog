@@ -3,6 +3,11 @@ from trysql import *
 
 
 def d_i_t():
+    def button_cd_clicked():
+        c = reader_cd.get()
+        j = get_cd(c)
+        reader_cd.delete(0, 'end')
+        reader_cd.insert(0, str(j))
 
     def fbi():
         spsk = reader.get()
@@ -38,6 +43,14 @@ def d_i_t():
     button_search = Button(root)
     button_search.configure(text="Искать", command=fbi)
     button_search.place(height=50, width=160, x=1220, y=50)
+
+    contact_button = Button(root)
+    contact_button.configure(text="Получить контакты", command=button_cd_clicked)
+    contact_button.place(height=50, width=160, x=1220, y=655)
+
+    reader_cd = Entry(root)
+    reader_cd.configure(font="Arial 20")
+    reader_cd.place(height=50, width=700, x=0, y=655)
 
     a = []
     for i in range(14):
